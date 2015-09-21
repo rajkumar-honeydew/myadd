@@ -23,7 +23,7 @@ test:
   password: root
 
 production:
-  adapter: mysql2
+  adapter: postgresql
   database: gmap
   pool: 5
   timeout: 5000
