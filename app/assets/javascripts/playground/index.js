@@ -115,7 +115,7 @@ function geocodePoint(latlng, callback) {
     var country = ''; 
     var postal_code = ''; 
     var city = ''; 
-    var name = '';
+    var address = '';
     var state = '';
     var latitude = latlng.lat();
     var longitude = latlng.lng();
@@ -125,7 +125,7 @@ function geocodePoint(latlng, callback) {
         if (responses && responses.length > 0) {
               
               // Address altogether style 
-              name = 'Address at ' + responses[0].formatted_address;
+              address = 'Address at ' + responses[0].formatted_address;
               
               // Extract address parts
               responses[0].address_components.forEach(function(el) { 
@@ -150,7 +150,7 @@ function geocodePoint(latlng, callback) {
                   country: country,
                   latitude: latitude,
                   longitude: longitude,
-                  name:name
+                  address:address
               }); 
               
         }

@@ -13,13 +13,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.text_field :sport %>
+    <%= f.text_field :name %>
   </div>
 
   <div class="field">
-    <%= f.text_field :name %>
+    <%= f.text_field :address %>
   </div>
-  
   
   
   <%= f.hidden_field :latitude %>
@@ -32,7 +31,7 @@
   <%= f.text_field :postal_code %>
   <br>
   
-  <%= f.submit class: "btn btn-lg btn-primary" %>
+  <%= f.submit class: "btn btn-lg btn-primary", :value=>"Generate addressbar" %>
   
 <% end %>
 
