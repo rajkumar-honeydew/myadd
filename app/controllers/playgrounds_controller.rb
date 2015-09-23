@@ -44,6 +44,12 @@ class PlaygroundsController < ApplicationController
   # POST /playgrounds.json
   def create
     @playground = Playground.new(playground_params)
+    if params[:home_type] && params[:home_type]=="house"
+      @playground.myadd_type_id=1
+    elsif params[:home_type] && params[:home_type]=="apartment"
+      @playground.myadd_type_id=2
+    end
+
     respond_to do |format|
       if @playground.save
         format.html { redirect_to @playground, notice: 'Playground was successfully created.' }
@@ -60,6 +66,11 @@ class PlaygroundsController < ApplicationController
   def update
     respond_to do |format|
       if @playground.update(playground_params)
+          if params[:home_type] && params[:home_type]=="house"
+          @playground.update(:myadd_type_id=>1)
+          elsif params[:home_type] && params[:home_type]=="apartment"
+          @playground.update(:myadd_type_id=>2)
+          end
         format.html { redirect_to @playground, notice: 'Playground was successfully updated.' }
         format.js {}  
       else

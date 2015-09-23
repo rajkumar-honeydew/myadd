@@ -31,9 +31,17 @@
   <%= f.text_field :postal_code %>
   <br>
   
-  <%= f.submit class: "btn btn-lg btn-primary", :value=>"Generate addressbar" %>
+  <%#= f.submit class: "btn btn-lg btn-primary", :value=>"Generate addressbar" %>
+  <!--input type="submit" value="Generate addressbar" name="commit" class="btn btn-lg btn-primary"-->
+  <a href="javascript:void(0);" class="btn btn-lg btn-primary" onclick="start_store();" title="">Generate addressbar</a>
   
 <% end %>
+
+
+
+
+
+
 
 
 

@@ -11,6 +11,7 @@ function playgroundsNew(geocode_information) {
         position: new google.maps.LatLng(geocode_information.latitude,geocode_information.longitude), 
         map: Gmaps.map.serviceObject,
         icon: 'http://www.google.com/mapfiles/marker_green.png',
+        //icon: 'http://maps.google.com/mapfiles/kml/pal3/icon20.png',
     });
     
     // Invoke rails app to get the create form
@@ -47,13 +48,19 @@ function playgroundsNew(geocode_information) {
 /**
  * Open one infowindow at a time 
  */
-function openInfowindow(html, marker)  {
+function openInfowindow(html, marker){
     
     // Close previous infowindow if exists
     closeInfowindow();
-    
+
+    html_v = html;
+    marker_v = marker;
+
+     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House</a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment</a>'+'</h3>'+'</div>'+'</div>'
+      '</div>';
+
     // Set the content and open
-    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html});
+    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: contentString});
     Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, marker);
 }
 
@@ -63,6 +70,32 @@ function openInfowindow(html, marker)  {
 function closeInfowindow() {
     if (Gmaps.map.visibleInfoWindow) 
         Gmaps.map.visibleInfoWindow.close();
+}
+
+
+//display the home or apartment form here
+function display_form(h_v){
+  var html_h;
+  var html_m;
+
+  //display the home or apartment type
+  if (h_v && h_v==1){
+    html_val = '<input type="hidden" name="house_type" id="house_type" value="house"/>'+html_v;
+  }
+  else if (h_v && h_v==2){
+    html_val = '<input type="hidden" name="house_type" id="house_type" value="apartment"/>'+html_v;
+  }else{
+    html_val = html_v;
+  }
+
+  var html_h = html_val;
+  var html_m = marker_v;
+
+  closeInfowindow();
+
+  // Set the content and open the home or apartment window
+    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h});
+    Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m);
 }    
 
 /**
@@ -165,7 +198,6 @@ function geocodePoint(latlng, callback) {
  * Bootstrap growl
  */
 function alert_user(message, type) {
-
     // Adding div contents
     $('#alert_placeholder').append('<div id="alertdiv" class="alert ' + type + '"><a class="close" data-dismiss="alert">×</a><span>' + message +'</span></div>');
 
@@ -174,4 +206,10 @@ function alert_user(message, type) {
         $("#alertdiv").remove();
     }, 5000);
 }
+
+function start_store(){
+   var type = $('#house_type').val();
+   $.post($('#playground_form').attr('action'), $('#playground_form').serialize()+"&home_type="+type, null, "script");
+}
+
 
