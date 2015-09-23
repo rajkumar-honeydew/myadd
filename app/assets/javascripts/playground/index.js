@@ -56,7 +56,7 @@ function openInfowindow(html, marker){
     html_v = html;
     marker_v = marker;
 
-     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House</a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment</a>'+'</h3>'+'</div>'+'</div>'
+     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House<i class="fa fa-home"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment<i class="fa fa-building"></i></a>'+'</h3>'+'</div>'+'</div>'
       '</div>';
 
     // Set the content and open
