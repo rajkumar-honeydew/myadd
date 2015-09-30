@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<div style="float:right"><%= link_to "Logout", destroy_user_session_path, method: :delete %></div><br /><br />
+<html>
+<head>
+   <link href="bootstrap.css" rel="stylesheet">
+   <!-- <link rel="stylesheet" type="text/css" href="anytime.css" /> -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+ <div class="col-md-12">
+ <h3>Administration</h3>
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1primary" data-toggle="tab">Pending</a></li>
+                            <li><a href="#tab2primary" data-toggle="tab">Report Spam</a></li>
+                            <li><a href="#tab3primary" data-toggle="tab">Approved</a></li>
+                            
+                        </ul>
+                </div>
+<div class="panel-body">
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1primary">
+        	<h4><%= "Pending" %></h4>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th><%=t('Name')%></th>
+ <th><%=t('Address')%></th>
+ <th><%=t('Type') %></th>
+ <th><%=t('Manage')%></th>
+</tr>
+</thead>
+
+<% @pending_playgrounds.each do | playground| %>
+<tr>
+    <td><%= playground.name.capitalize %></td>
+    <td><%=playground.address %></td>
+    <%if playground.myadd_type_id == 1  %>
+    <td><%="House"%></td>
+    <% elsif playground.myadd_type_id == 2 %>
+    <td><%="Apartment" %></td>
+    <% elsif playground.myadd_type_id == 3 %>
+    <td><%="Building" %></td>
+    <% end %>
+	<% if playground.status_id? %>
+	<td><a href="javascript:void(0);" onclick="update_house('<%=playground.id%>',false);" title=""><%= "Deactivate" %></a></td>
+	<% else %>
+	 <td><a href="javascript:void(0);" onclick="update_house('<%=playground.id%>',true);" title=""><%='Activate'%></a></td>
+	<% end %>
+	</tr>
+<% end %>
+</table>
+
+    </div>
+    <div class="tab-pane fade" id="tab2primary">Report Spam</div>
+    <div class="tab-pane fade" id="tab3primary">
+    	<h4><%= "Approved" %></h4>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th><%=t('Name')%></th>
+ <th><%=t('Address')%></th>
+ <th><%=t('Type') %></th>
+ <th><%=t('Manage')%></th>
+</tr>
+</thead>
+
+<% @approved_playgrounds.each do | playground| %>
+<tr>
+    <td><%= playground.name.capitalize %></td>
+    <td><%=playground.address %></td>
+    <%if playground.myadd_type_id == 1  %>
+    <td><%="House"%></td>
+    <% elsif playground.myadd_type_id == 2 %>
+    <td><%="Apartment" %></td>
+    <% elsif playground.myadd_type_id == 3 %>
+    <td><%="Building" %></td>
+    <% end %>
+	<% if playground.status_id? %>
+	<td><a href="javascript:void(0);" onclick="update_house('<%=playground.id%>',false);" title=""><%= "Deactivate" %></a></td>
+	<% else %>
+	 <td><a href="javascript:void(0);" onclick="update_house('<%=playground.id%>',true);" title=""><%='Activate'%></a></td>
+	<% end %>
+	</tr>
+<% end %>
+
+</table>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
+
+
+
+
+
+<script>
+function update_house(id,status){
+	$.ajax({
+    type: "get",
+    url: "/playgrounds/update_house_status",
+    data: {
+    "id": id,
+    "status": status
+    },
+    dataType : 'script',
+    iframe: 'true',
+    cache: false,
+    success: function(data){
+    }
+    });
+
+}
+</script>

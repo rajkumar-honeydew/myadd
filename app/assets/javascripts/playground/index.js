@@ -56,7 +56,7 @@ function openInfowindow(html, marker){
     html_v = html;
     marker_v = marker;
 
-     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House<i class="fa fa-home"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment<i class="fa fa-building"></i></a>'+'</h3>'+'</div>'+'</div>'
+     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House<i class="fa fa-home"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment<i class="fa fa-building"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(3);">Building<i class="fa fa-building-o"></i></a>'+'</h3>'+'</div>'+'</div>'
       '</div>';
 
     // Set the content and open
@@ -77,13 +77,19 @@ function closeInfowindow() {
 function display_form(h_v){
   var html_h;
   var html_m;
-
+  
+  
   //display the home or apartment type
   if (h_v && h_v==1){
     html_val = '<input type="hidden" name="house_type" id="house_type" value="house"/>'+html_v;
+  
   }
   else if (h_v && h_v==2){
+
     html_val = '<input type="hidden" name="house_type" id="house_type" value="apartment"/>'+html_v;
+  
+  }else if (h_v && h_v==3){
+    html_val = '<input type="hidden" name="house_type" id="house_type" value="building"/>'+html_v;
   }else{
     html_val = html_v;
   }
@@ -208,7 +214,6 @@ function alert_user(message, type) {
 }
 
 function start_store(){
-   var type = $('#house_type').val();
    $.post($('#playground_form').attr('action'), $('#playground_form').serialize()+"&home_type="+type, null, "script");
 }
 

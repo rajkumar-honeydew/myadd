@@ -1,6 +1,7 @@
 class PlaygroundsController < ApplicationController
-  
+  before_action :authenticate_user!, only: [:admin]
   before_action :set_playground, only: [:show, :edit, :update, :destroy]
+  # before_action :authenticate_house_registration, only: [:create]
   
   respond_to :html
   
@@ -12,7 +13,7 @@ class PlaygroundsController < ApplicationController
   # GET /playgrounds
   # GET /playgrounds.json
   def index
-    @playgrounds = Playground.all
+    @playgrounds = Playground.where(:status_id =>true)
     @json = @playgrounds.to_gmaps4rails do |playground, marker|
       @playground = playground
       marker.infowindow render_to_string(:action => 'show', :layout => false)    
@@ -48,6 +49,8 @@ class PlaygroundsController < ApplicationController
       @playground.myadd_type_id=1
     elsif params[:home_type] && params[:home_type]=="apartment"
       @playground.myadd_type_id=2
+    elsif params[:home_type] && params[:home_type]=="building"
+      @playground.myadd_type_id=3
     end
 
     respond_to do |format|
@@ -70,6 +73,8 @@ class PlaygroundsController < ApplicationController
           @playground.update(:myadd_type_id=>1)
           elsif params[:home_type] && params[:home_type]=="apartment"
           @playground.update(:myadd_type_id=>2)
+          elsif params[:home_type] && params[:home_type]=="building"
+          @playground.update(:myadd_type_id=>3)
           end
         format.html { redirect_to @playground, notice: 'Playground was successfully updated.' }
         format.js {}  
@@ -90,6 +95,22 @@ class PlaygroundsController < ApplicationController
     end
   end
 
+  def admin
+   @pending_playgrounds = Playground.where(:status_id => false)
+   @approved_playgrounds = Playground.where(:status_id => true)
+  end
+
+  def update_house_status
+    if params[:id]
+       playground =  Playground.find(params[:id])
+       playground.update(:status_id => params[:status] == "true" ? true  : false)
+    end
+ 
+  end
+ def authenticate_house_registration
+
+# render :format => :js
+  end
 
 private
   # Use callbacks to share common setup or constraints between actions.
@@ -109,4 +130,6 @@ private
       format.js { render :template => "playgrounds/404.js.erb", :locals => {:exception => exception} }
     end
   end
+
+  
 end

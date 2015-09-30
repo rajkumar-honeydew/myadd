@@ -1,0 +1,62 @@
+<body>
+<div class="admin_login">
+ <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  
+    <%#= f.label :email %>
+    <label for="user_email"><%=t('Email')%></label><br />
+    <%= f.email_field :email, autofocus: true, class: "mainuser" %>
+
+  
+    <%#= f.label :password %>
+    <label for="user_password"><%=t('Password')%></label><br />
+    <%= f.password_field :password, autocomplete: "off", class: "password" %>
+
+
+  <!--<% if devise_mapping.rememberable? -%>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end -%>-->
+
+
+    <%=button_tag t("Log in"), class:'btn' %>
+    <%= button_tag t("Cancel"), :type => 'reset', class:'btn'  %>
+ 
+<% end %>
+<%= render "devise/shared/links" %>
+</div>
+</body>
+<style>
+  .mainuser{background:#f0eef0 url(../assets/user.png) right no-repeat;}
+.password {background:#f0eef0 url(../assets/password.png) right no-repeat;}
+.btn  
+{
+  margin:10px 0px ;
+  padding: 8px 10px;
+  border-radius:5px;
+  border:0px solid #7ac9b7;
+  background-color: #3060a0;
+  color: #fff!important;
+  font-size:11px;
+  cursor:pointer;
+  font-weight: normal!important;
+}
+.wrapper {
+    background: none repeat scroll 0 0 #fbfbfb;
+    font-size: 12px;
+    height: auto !important;
+    margin: 0 auto -30px;
+    min-height: 88%;
+    padding-bottom: 10px;
+    width: 990px;
+}
+
+.admin_login {
+    background: url("../../../assets/login-screen.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 290px;
+    margin: auto;
+    padding: 9px 31px;
+    width: 343px;
+}
+</style>

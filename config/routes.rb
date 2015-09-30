@@ -1,5 +1,17 @@
 Playgrounds::Application.routes.draw do
-  resources :playgrounds
+  devise_for :users
+  resources :playgrounds do
+   collection {
+    get 'update_house_status'
+    get 'authenticate_house_registration'
+  }
+ 
+  end
+   
+    match 'admin' => 'playgrounds#admin', as: :admin, via: [:get, :post]
+
+ 
+
 
   root 'playgrounds#index'
 
