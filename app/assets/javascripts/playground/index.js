@@ -214,7 +214,6 @@ function alert_user(message, type) {
 }
 
 function start_store(){
-   $.post($('#playground_form').attr('action'), $('#playground_form').serialize()+"&home_type="+type, null, "script");
+  var type = $('#house_type').val();
+   $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type, null, "script");
 }
-
-
