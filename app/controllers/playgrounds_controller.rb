@@ -96,7 +96,7 @@ class PlaygroundsController < ApplicationController
   end
 
   def admin
-   @pending_playgrounds = Playground.where(:status_id => false)
+   @pending_playgrounds = Playground.where(:status_id => false || nil)
    @approved_playgrounds = Playground.where(:status_id => true)
   end
 
