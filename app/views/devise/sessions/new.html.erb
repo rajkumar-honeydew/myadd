@@ -1,63 +1,70 @@
-<body>
-<div class="admin_login">
- <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  
-    <%#= f.label :email %>
-    <label for="user_email"><%=t('Email')%></label><br />
-    <%= f.email_field :email, autofocus: true, class: "mainuser" %>
-
-  
-    <%#= f.label :password %>
-    <label for="user_password"><%=t('Password')%></label><br />
-    <%= f.password_field :password, autocomplete: "off", class: "password" %>
 
 
-  <!--<% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Bootstrap Login Form</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- <link href="styles.css" rel="stylesheet"> -->
+    <%= stylesheet_link_tag "style" %>
+  </head>
+  <body>
+<!--login modal-->
+<div class="container">
+    <div class="row vertical-offset-100">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Please sign in</h3>
+        </div>
+          <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="form-group">
+                  <!-- <input class="form-control" placeholder="E-mail" name="email" type="text"> -->
 
+             <%= f.email_field :email, autofocus: true, class: "form-control",:placeholder =>"E-mail" %>
+              </div>
+              <div class="form-group">
+                <!-- <input class="form-control" placeholder="Password" name="password" type="password" value=""> -->
+                <%= f.password_field :password, autocomplete: "off", class: "form-control", :placeholder =>"Password" %>
+              </div>
+              <div class="checkbox">
+                  <label>
+                    <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                  </label>
+                </div>
 
-    <%=button_tag t("Log in"), class:'btn btn-success' %>
-    <%= button_tag t("Cancel"), :type => 'reset', class:'btn btn-success'  %>
+    <%=button_tag t("Log in"), class:'btn btn-lg btn-success btn-block' %>
+    <%= button_tag t("Cancel"), :type => 'reset', class:'btn btn-lg btn-success btn-block'  %>
  
 <% end %>
 <%= render "devise/shared/links" %>
-</div>
-</body>
-<style>
-  .mainuser{background:#f0eef0 url(../assets/user.png) right no-repeat;}
-.password {background:#f0eef0 url(../assets/password.png) right no-repeat;}
-.btn  
-{
-  margin:10px 0px ;
-  padding: 8px 10px;
-  border-radius:5px;
-  border:0px solid #7ac9b7;
-  background-color: #3060a0;
-  color: #fff!important;
-  font-size:11px;
-  cursor:pointer;
-  font-weight: normal!important;
-}
-.wrapper {
-    background: none repeat scroll 0 0 #fbfbfb;
-    font-size: 12px;
-    height: auto !important;
-    margin: 0 auto -30px;
-    min-height: 88%;
-    padding-bottom: 10px;
-    width: 990px;
-}
 
-.admin_login {
-    background:#09f;
-    height: 250px;
-    margin: 100px auto;
-    padding: 9px 31px;
-    width: 265px;
-    border-radius:5px;
-}
+            </fieldset>
+              </form>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- script references -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+<style>
+body{
+background: url(http://mymaplist.com/img/parallax/back.png);
+  background-color: #444;
+    background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png); 
+  }
 </style>
+
+
+
