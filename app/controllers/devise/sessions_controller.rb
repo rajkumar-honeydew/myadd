@@ -18,14 +18,14 @@ class Devise::SessionsController < DeviseController
     sign_in(resource_name, resource)
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
-    current_user.update(:logged_out_time => nil, :online_status => true)
+    # current_user.update(:logged_out_time => nil, :online_status => true)
   end
 
   # DELETE /resource/sign_out
   def destroy
     #cookies.delete :locale
     cookies['locale'] = 'en'
-    current_user.update(:logged_out_time => Time.now)
+    # current_user.update(:logged_out_time => Time.now)
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
     set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
     yield if block_given?
