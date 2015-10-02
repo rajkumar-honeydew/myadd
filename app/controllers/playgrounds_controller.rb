@@ -52,7 +52,15 @@ class PlaygroundsController < ApplicationController
     elsif params[:home_type] && params[:home_type]=="building"
       @playground.myadd_type_id=3
     end
+    country = params[:playground][:country][0..1].upcase
+    state = params[:playground][:state][0..1].upcase
+    city = params[:playground][:city][0..1].upcase
+    postal = params[:playground][:postal_code].split('').last(2).join('')
+    unicode = ([*('0'..'9')]).sample(4).join
+    code = [postal,unicode].join('') 
+    address_bar = [country,state,city,code].join('-')
 
+    @playground.address_bar_index = address_bar
     respond_to do |format|
       if @playground.save
         format.html { redirect_to @playground, notice: 'Playground was successfully created.' }

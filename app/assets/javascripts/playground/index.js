@@ -75,10 +75,20 @@ function closeInfowindow() {
 
 //display the home or apartment form here
 function display_form(h_v){
-  var html_h;
-  var html_m;
-  
-  
+ html_val = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Gmail<i class="fa fa-google"></i></a>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>';
+// html_val =  '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="/users/auth/google_oauth2" >Gmail<i class="fa fa-google"></i></a>'+'<a href="/auth/facebook" id="sign_in" >Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>'
+  var html_h = html_val;
+  var html_m = marker_v;
+
+  closeInfowindow();
+
+  // Set the content and open the home or apartment window
+    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h});
+    Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m);
+}    
+
+function display_form1(h_v){
+
   //display the home or apartment type
   if (h_v && h_v==1){
     html_val = '<input type="hidden" name="house_type" id="house_type" value="house"/>'+html_v;
@@ -93,17 +103,18 @@ function display_form(h_v){
   }else{
     html_val = html_v;
   }
+  var html_h1 = html_val;
+  var html_m2 = marker_v;
 
-  var html_h = html_val;
-  var html_m = marker_v;
 
   closeInfowindow();
 
   // Set the content and open the home or apartment window
-    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h});
-    Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m);
-}    
-
+    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h1});
+    Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m2);
+  
+}
+ 
 /**
  * Dummy clear marker
  */
