@@ -90,6 +90,7 @@ function display_form(h_v){
 function display_form1(h_v){
 
   //display the home or apartment type
+  
   if (h_v && h_v==1){
     html_val = '<input type="hidden" name="house_type" id="house_type" value="house"/>'+html_v;
   
@@ -228,3 +229,28 @@ function start_store(){
   var type = $('#house_type').val();
    $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type, null, "script");
 }
+
+ function report_spam(id,lat,log){
+
+lat_l = {"A":parseFloat(log),"F":parseFloat(lat)}
+
+    geocode_information  = lat_l 
+    // Create an new marker  
+    playgroundsNewMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(geocode_information.latitude,geocode_information.longitude), 
+        map: Gmaps.map.serviceObject,
+        icon: 'http://www.google.com/mapfiles/marker_green.png',
+        //icon: 'http://maps.google.com/mapfiles/kml/pal3/icon20.png',
+    });
+    
+     html_m = playgroundsNewMarker
+     html_h = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'your comments:<BR><TEXTAREA NAME="comments" COLS=40 ROWS=6></TEXTAREA>'+'</div>'+'</div>'+'</div>'
+
+      closeInfowindow();
+
+    Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h});
+    Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m);
+    
+  }
+
+

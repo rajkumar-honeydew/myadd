@@ -41,6 +41,14 @@
           <th scope="row">Country</th>
           <td><%= f.text_field :country, :class=>"form-control" %></td>
          </tr>
+         <tr>
+          <th>Photo1</th>
+          <td><%= f.file_field :image %></td>
+         </tr>
+         <tr>
+          <th>Photo2</th>
+          <td><%= f.file_field :image1 %></td>
+         </tr>
       </tbody>
     </table>
      <p align="center"><a href="javascript:void(0);" class="btn btn-success" onclick="start_store();">Generate Address Bar</a></p>

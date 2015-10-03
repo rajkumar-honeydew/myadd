@@ -30,6 +30,7 @@ class PlaygroundsController < ApplicationController
   # GET /playgrounds/new
   def new
     @playground = Playground.new(params[:playground].present? ? playground_params : nil)
+    puts "FFFFFFFRRRRRR#{@playground.inspect}"
     respond_with(@playground, :layout => !request.xhr?)
   end
 
@@ -128,7 +129,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def playground_params
-    params.require(:playground).permit(:name, :address, :latitude, :longitude, :street_number, :route, :city, :country, :postal_code, :state, :address_bar_index, :myadd_type_id, :hint, :user_id, :myadd_added_date, :myadd_approved_date, :status_id, :created_by, :last_updated_by)
+    params.require(:playground).permit(:name, :address, :latitude, :longitude, :street_number, :route, :city, :country, :postal_code, :state, :address_bar_index, :myadd_type_id, :hint, :user_id, :myadd_added_date, :myadd_approved_date, :status_id, :is_spam, :created_by, :last_updated_by, images_attributes: [:image,:image1])
   end
   
   # Generic not found action

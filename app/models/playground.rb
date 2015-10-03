@@ -1,5 +1,8 @@
 class Playground < ActiveRecord::Base
+# attr_accessible :image, :image1
 
+# mount_uploader :image, ImageUploader
+# mount_uploader :image1, ImageUploader
   # SPORTS = ['Football','Cricket','Field Hockey','Tennis','Volleyball','Table Tennis','Baseball','Golf','American Football']
 
   acts_as_gmappable :process_geocoding => false
@@ -7,6 +10,7 @@ class Playground < ActiveRecord::Base
   #validates_inclusion_of :sport, :in => Playground::SPORTS
   validates_presence_of :name
   validates_presence_of :address
+  
 
   # *** Server-side reverse geocoding, not for this example!
   #reverse_geocoded_by :latitude, :longitude do |obj,results|
