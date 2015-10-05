@@ -6,7 +6,7 @@ class Playground < ActiveRecord::Base
 # mount_uploader :image1, ImageUploader
   # SPORTS = ['Football','Cricket','Field Hockey','Tennis','Volleyball','Table Tennis','Baseball','Golf','American Football']
 
-  acts_as_gmappable :process_geocoding => false
+  # acts_as_gmappable :process_geocoding => false
   
   #validates_inclusion_of :sport, :in => Playground::SPORTS
   validates_presence_of :name
