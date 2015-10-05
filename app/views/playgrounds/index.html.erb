@@ -156,9 +156,9 @@ copy
                 clearMarker(playgroundsNewMarker);
     
                 // Geocode point. Callback on success will show the creation form
-               alert(JSON.stringify(event));
+               
                 geocodePoint(event.latLng, function(data) {
-                   playgroundsNew(data);
+                   playgroundsNew(data, '<%=current_user%>');
                 });                
             });
         }; 

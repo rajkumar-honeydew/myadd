@@ -23,7 +23,11 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
    require 'omniauth-google-oauth2'
-  config.omniauth :google_oauth2, "773189047114-gggd3nrdbldj9sj5hvftl19h0vjan1gn.apps.googleusercontent.com", "jaks732YNptp4rw0r4M7I3PV", { access_type: "offline", approval_prompt: "" }
+  config.omniauth :google_oauth2, "773189047114-gggd3nrdbldj9sj5hvftl19h0vjan1gn.apps.googleusercontent.com", "jaks732YNptp4rw0r4M7I3PV",  {client_options: {ssl: {ca_file: Rails.root.join('lib/assets/cacert.pem').to_s}}}
+  config.omniauth :facebook, "333154613391129", "6d3b52be7c99dea28b04bd1a866b1a20"
+  
+
+ # provider :facebook, CUSTOMER_KEY, CUSTOMER_SECRET, {client_options: {ssl: {ca_file: Rails.root.join('lib/assets/cacert.pem').to_s}}}
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

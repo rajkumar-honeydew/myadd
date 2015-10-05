@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003070339) do
+ActiveRecord::Schema.define(version: 20151004185646) do
 
   create_table "playgrounds", force: true do |t|
     t.string   "name"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20151003070339) do
     t.datetime "updated_at"
     t.string   "image"
     t.string   "image1"
-    t.boolean  "is_spam"
     t.string   "spam_details"
+    t.boolean  "is_spam"
   end
 
   create_table "users", force: true do |t|

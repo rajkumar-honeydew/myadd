@@ -1,3 +1,4 @@
+<% if @playground_exist.nil? %>
 <%if (@playground.errors.empty?) %>    
     
     var createMarkerWithInfoWindow = function () {
@@ -47,8 +48,13 @@
     
 
 <%else%>
-alert('<%=@playground.errors.full_messages.join(',')%>');
+alert('User already created the location');
     // Notify user
-    alert_user("Aj Got :(... I can't insert that. <%= j(raw(@playground.errors.full_messages.join(','))) %>", "alert-error");
+    // alert_user("Aj Got :(... I can't insert that. <%= j(raw(@playground.errors.full_messages.join(','))) %>", "alert-error");
 
 <%end%>
+
+<%else %>
+alert('User already created the location');
+
+<% end %>

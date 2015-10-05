@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div style="float:right"><%= link_to "Logout", destroy_user_session_path, method: :delete %></div><br /><br />
+<!-- <div style="float:right"><%= link_to "Logout", destroy_user_session_path, method: :delete %></div><br /><br /> -->
 <html>
 <head>
    <link href="bootstrap.css" rel="stylesheet">
@@ -55,7 +55,42 @@
 </table>
 
     </div>
-    <div class="tab-pane fade" id="tab2primary">Report Spam</div>
+    <div class="tab-pane fade" id="tab2primary">
+                    <h4><%= "Pending" %></h4>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th><%=t('Name')%></th>
+ <th><%=t('Address')%></th>
+ <th><%=t('Type') %></th>
+ <th><%=t('Manage')%></th>
+</tr>
+</thead>
+
+<% @spam_playgrounds.each do | playground| %>
+<tr>
+    <td><%= playground.name.capitalize %></td>
+    <td><%=playground.address %></td>
+    <%if playground.myadd_type_id == 1  %>
+    <td><%="House"%></td>
+    <% elsif playground.myadd_type_id == 2 %>
+    <td><%="Apartment" %></td>
+    <% elsif playground.myadd_type_id == 3 %>
+    <td><%="Building" %></td>
+    <% end %>
+   
+    <td>
+    <% @playground = playground%>
+    <%#= link_to "Destroy" , :action =>"destroy", :id => playground.id , :method =>"delete"%>
+    <!-- <a href="/playgrounds/<%=playground.id%>"  title="" method="delete"><%= "Destroy" %></a> -->
+    <%= link_to raw('Destroy <i class="icon-trash"></i>'), @playground, class: "btn btn-lg", method: "delete", data: { confirm: 'Are you sure?' }, :remote =>true %>
+
+    </td>
+    
+    </tr>
+<% end %>
+</table>
+    </div>
     <div class="tab-pane fade" id="tab3primary">
     	<h4><%= "Approved" %></h4>
 <table class="table table-bordered">

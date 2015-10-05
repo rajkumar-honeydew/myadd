@@ -1,4 +1,6 @@
 class PlaygroundsController < ApplicationController
+  require 'jwt/json'
+
   before_action :authenticate_user!, only: [:admin]
   before_action :set_playground, only: [:show, :edit, :update, :destroy]
   # before_action :authenticate_house_registration, only: [:create]
@@ -13,6 +15,7 @@ class PlaygroundsController < ApplicationController
   # GET /playgrounds
   # GET /playgrounds.json
   def index
+    puts "FFFFFFFFFFF#{current_user.inspect}"
     @playgrounds = Playground.where(:status_id =>true)
     @json = @playgrounds.to_gmaps4rails do |playground, marker|
       @playground = playground
@@ -30,7 +33,6 @@ class PlaygroundsController < ApplicationController
   # GET /playgrounds/new
   def new
     @playground = Playground.new(params[:playground].present? ? playground_params : nil)
-    puts "FFFFFFFRRRRRR#{@playground.inspect}"
     respond_with(@playground, :layout => !request.xhr?)
   end
 
@@ -45,6 +47,9 @@ class PlaygroundsController < ApplicationController
   # POST /playgrounds
   # POST /playgrounds.json
   def create
+    @playground_exist = User.find(current_user.id).playground
+
+    if @playground_exist.nil?
     @playground = Playground.new(playground_params)
     if params[:home_type] && params[:home_type]=="house"
       @playground.myadd_type_id=1
@@ -62,6 +67,7 @@ class PlaygroundsController < ApplicationController
     address_bar = [country,state,city,code].join('-')
 
     @playground.address_bar_index = address_bar
+    @playground.user_id = current_user.id
     respond_to do |format|
       if @playground.save
         format.html { redirect_to @playground, notice: 'Playground was successfully created.' }
@@ -71,6 +77,12 @@ class PlaygroundsController < ApplicationController
         format.js {}      
       end
     end
+  else
+    respond_to do |format|
+    #format.html { redirect_to @playground, notice: 'Playground is already created by current user' }
+        format.js {}
+      end
+  end
   end
 
   # PATCH/PUT /playgrounds/1
@@ -97,7 +109,16 @@ class PlaygroundsController < ApplicationController
   # DELETE /playgrounds/1
   # DELETE /playgrounds/1.json
   def destroy
-    @playground.destroy
+    user = User.find_by(:email => "admin@myadd.com")
+    
+    if (user.id != @playground.user_id)
+      u = User.find(@playground.user_id) if @playground && @playground.user_id
+      if !u.nil?
+          u.delete
+      end
+    end
+    @playground.delete
+
     respond_to do |format|
       format.html { redirect_to playgrounds_url }
       format.js {}  
@@ -107,6 +128,7 @@ class PlaygroundsController < ApplicationController
   def admin
    @pending_playgrounds = Playground.where(:status_id => false || nil)
    @approved_playgrounds = Playground.where(:status_id => true)
+   @spam_playgrounds = Playground.where(:is_spam => true)
   end
 
   def update_house_status
@@ -121,6 +143,13 @@ class PlaygroundsController < ApplicationController
 # render :format => :js
   end
 
+  def update_spam
+
+    @playground = Playground.find(params[:playground_id].to_i)
+    @playground.update(:is_spam =>true, :spam_details => params[:spam_desc])
+    render :nothing => true, :status => 200, :content_type => 'text/html'
+  end
+
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_playground
@@ -129,7 +158,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def playground_params
-    params.require(:playground).permit(:name, :address, :latitude, :longitude, :street_number, :route, :city, :country, :postal_code, :state, :address_bar_index, :myadd_type_id, :hint, :user_id, :myadd_added_date, :myadd_approved_date, :status_id, :is_spam, :created_by, :last_updated_by, images_attributes: [:image,:image1])
+    params.require(:playground).permit(:name, :address, :latitude, :longitude, :street_number, :route, :city, :country, :postal_code, :state, :address_bar_index, :myadd_type_id, :hint, :user_id, :myadd_added_date, :myadd_approved_date, :status_id, :is_spam, :created_by, :last_updated_by, :image,:image1)
   end
   
   # Generic not found action

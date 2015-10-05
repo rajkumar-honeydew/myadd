@@ -4,13 +4,14 @@ Playgrounds::Application.routes.draw do
    collection {
     get 'update_house_status'
     get 'authenticate_house_registration'
+    get 'update_spam'
   }
  
   end
 
 # facebook integration routes
-get 'auth/:provider', to: 'sessions#create'
-get 'auth/failure', to: redirect('/')
+# get 'auth/:provider', to: 'sessions#create'
+# get 'auth/failure', to: redirect('/')
 get 'signout', to: 'sessions#destroy', as: 'signout'
    
 
@@ -18,7 +19,7 @@ match 'admin' => 'playgrounds#admin', as: :admin, via: [:get, :post]
 
 devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   
-root 'playgrounds#index'
+root to: 'playgrounds#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

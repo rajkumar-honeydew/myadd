@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_one :playground
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,7 +7,6 @@ class User < ActiveRecord::Base
 
 
 def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-	puts "RRRRRRRR#{access_token.inspect}"
     data = access_token.info
     user = User.where(:provider => access_token.provider, :uid => access_token.uid ).first
     if user
@@ -33,7 +33,9 @@ def self.from_omniauth(auth)
       user.name = auth.info.name
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-      user.save!
+      user.email = auth.uid+'@facebook.com'
+      user.password = Devise.friendly_token[0,20]
+      user.save
     end
   end
 

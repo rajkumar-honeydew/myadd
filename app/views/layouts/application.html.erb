@@ -8,8 +8,12 @@
       <%= csrf_meta_tags %>
     </head>
     <body>
+    
 
         <div class="container-fluid">
+        <% unless current_user.nil? %>
+<div style="float:right"><%= link_to "Logout", destroy_user_session_path, method: :delete, :class =>"btn" %></div><br /><br/>
+<% end %>
 
             <div class="row-fluid">
                 <!--div class="span9">

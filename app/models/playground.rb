@@ -1,4 +1,5 @@
 class Playground < ActiveRecord::Base
+  belongs_to :user
 # attr_accessible :image, :image1
 
 # mount_uploader :image, ImageUploader

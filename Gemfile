@@ -11,8 +11,9 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
-gem "rmagick"
-gem 'carrierwave'
+gem 'pry'
+#gem "rmagick"
+#gem 'carrierwave'
 
 # gem "rmagick"
 

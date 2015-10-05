@@ -4,7 +4,7 @@
 * Invokes rails /playgrounds/create by ajax
 * Add the form to google maps infowindow
 */
-function playgroundsNew(geocode_information) {
+function playgroundsNew(geocode_information,user) {
     
     // Create an new marker  
     playgroundsNewMarker = new google.maps.Marker({
@@ -15,6 +15,10 @@ function playgroundsNew(geocode_information) {
     });
     
     // Invoke rails app to get the create form
+    if(!user){
+      display_form();
+    }else
+    {
     $.ajax({
         url: '/playgrounds/new?' + jQuery.param({playground:geocode_information}) + '#chunked=true',
         type: 'GET',
@@ -42,6 +46,7 @@ function playgroundsNew(geocode_information) {
             });
         }
     });
+  }
 }
 
 
@@ -56,7 +61,7 @@ function openInfowindow(html, marker){
     html_v = html;
     marker_v = marker;
 
-     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(1);">House<i class="fa fa-home"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(2);">Apartment<i class="fa fa-building"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form(3);">Building<i class="fa fa-building-o"></i></a>'+'</h3>'+'</div>'+'</div>'
+     var contentString = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1(1);">House<i class="fa fa-home"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1(2);">Apartment<i class="fa fa-building"></i></a>'+'</h3>'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1(3);">Building<i class="fa fa-building-o"></i></a>'+'</h3>'+'</div>'+'</div>'
       '</div>';
 
     // Set the content and open
@@ -74,11 +79,11 @@ function closeInfowindow() {
 
 
 //display the home or apartment form here
-function display_form(h_v){
- html_val = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Gmail<i class="fa fa-google"></i></a>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>';
-// html_val =  '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="/users/auth/google_oauth2" >Gmail<i class="fa fa-google"></i></a>'+'<a href="/auth/facebook" id="sign_in" >Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>'
+function display_form(){
+ // html_val = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Gmail<i class="fa fa-google"></i></a>'+'<a href="javascript:void(0)" onclick="display_form1('+h_v+');">Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>';
+   html_val =  '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'<h3>'+'<a href="/users/auth/google_oauth2" >Gmail<i class="fa fa-google"></i></a>'+'<a href="/users/auth/facebook" id="sign_in" >Facebook<i class="fa fa-facebook-official"></i></a>'+'</div>'+'</div>'
   var html_h = html_val;
-  var html_m = marker_v;
+  var html_m = playgroundsNewMarker;
 
   closeInfowindow();
 
@@ -227,10 +232,33 @@ function alert_user(message, type) {
 
 function start_store(){
   var type = $('#house_type').val();
-   $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type, null, "script");
+  var image1 = $('#playground_image1').val();
+  var image = $('#playground_image').val();
+   $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type+"&image1="+image1+"&image="+image, null, "script");
 }
 
  function report_spam(id,lat,log){
+  // clearMarker(playgroundsNewMarker);
+
+        // // Create marker info
+        // var markerInfo = {    
+        //     position: new google.maps.LatLng(
+        //             parseFloat(lat),
+        //             parseFloat(log)
+        //     ), 
+        //     map: Gmaps.map.serviceObject,
+        //     id: id
+        // }
+            
+        // // Create new marker
+        // var marker = new google.maps.Marker(markerInfo);
+    
+        // // Add marker serviceObject
+        // markerInfo.serviceObject = marker;
+    
+        // // Add to the markers array
+        // Gmaps.map.markers.push(markerInfo);
+
 
 lat_l = {"A":parseFloat(log),"F":parseFloat(lat)}
 
@@ -244,13 +272,29 @@ lat_l = {"A":parseFloat(log),"F":parseFloat(lat)}
     });
     
      html_m = playgroundsNewMarker
-     html_h = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'your comments:<BR><TEXTAREA NAME="comments" COLS=40 ROWS=6></TEXTAREA>'+'</div>'+'</div>'+'</div>'
+     html_h = '<div class="modal-content pop1">'+'<div class="modal-body">'+'<div class="col-md-6">'+'your comments:<BR><TEXTAREA NAME="comments" COLS=40 ROWS=6 ID="spam_desc"></TEXTAREA>'+'<a href="javascript:void(0);"  onclick= "post_spam('+id+');" class="btn">Post Spam</a> '+ '</div>'+'</div>'+'</div>'
 
       closeInfowindow();
 
     Gmaps.map.visibleInfoWindow = new google.maps.InfoWindow({content: html_h});
     Gmaps.map.visibleInfoWindow.open(Gmaps.map.serviceObject, html_m);
     
+  }
+
+  function post_spam(id){
+    var desc = $('#spam_desc').val()
+     $.ajax({
+        url: '/playgrounds/update_spam?' + jQuery.param({playground_id: id, spam_desc: desc}) + '#chunked=true',
+        type: 'GET',
+        async: false,
+        success: function(html) { 
+
+            closeInfowindow();
+            // Add on close behaviour to clear this marker
+         
+        }
+    });
+
   }
 
 
