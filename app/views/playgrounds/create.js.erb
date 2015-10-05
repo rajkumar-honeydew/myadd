@@ -48,7 +48,7 @@
     
 
 <%else%>
-alert('User already created the location');
+alert('<%=@playground.errors.full_messages.join(',')%>');
     // Notify user
     // alert_user("Aj Got :(... I can't insert that. <%= j(raw(@playground.errors.full_messages.join(','))) %>", "alert-error");
 

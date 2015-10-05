@@ -15,7 +15,6 @@ class PlaygroundsController < ApplicationController
   # GET /playgrounds
   # GET /playgrounds.json
   def index
-    puts "FFFFFFFFFFF#{current_user.inspect}"
     @playgrounds = Playground.where(:status_id =>true)
     @json = @playgrounds.to_gmaps4rails do |playground, marker|
       @playground = playground
