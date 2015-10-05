@@ -232,9 +232,51 @@ function alert_user(message, type) {
 
 function start_store(){
   var type = $('#house_type').val();
-  var image1 = $('#playground_image1').val();
-  var image = $('#playground_image').val();
-   $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type+"&image1="+image1+"&image="+image, null, "script");
+   country = $('#playground_country').val();
+   name = $('#playground_name').val();
+   address = $('#playground_address').val();
+   city = $('#playground_city').val();
+   postal_code = $('#playground_postal_code').val();
+   state = $('#playground_state').val();
+   latitude = $('#playground_latitude').val();
+   longitude = $('#playground_longitude').val();
+   route = $('#playground_route').val();
+   street_number = $('#playground_street_number').val();
+   
+   
+  
+  //  $.post($('#playground_form').attr('action'),$('#playground_form').serialize()+"&home_type="+type+"&image1="+image1+"&image="+image, null, "script");
+
+   var file_data = $("#playground_logo").prop("files")[0];
+   var file_data_two = $("#playground_picture").prop("files")[0];
+   var form_data = new FormData();
+   form_data.append("playground[logo]", file_data); 
+   form_data.append("playground[picture]", file_data_two); 
+   form_data.append("playground[country]", country);  
+   form_data.append("playground[name]", name); 
+   form_data.append("playground[address]", address);  
+   form_data.append("home_type", type);  
+   form_data.append("playground[city]", city);  
+   form_data.append("playground[postal_code]", postal_code);  
+   form_data.append("playground[state]", state);  
+   form_data.append("playground[latitude]", latitude); 
+   form_data.append("playground[longitude]", longitude); 
+   form_data.append("playground[route]", route); 
+   form_data.append("playground[street_number]", street_number);
+   
+
+    $.ajax({
+            type: 'POST',
+            url: '/playgrounds',
+            data: form_data,
+            processData: false,
+            contentType: false,
+            dataType : 'script',
+            cache: false,
+            success: function(data){
+            }
+            });
+
 }
 
  function report_spam(id,lat,log){
