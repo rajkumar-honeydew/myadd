@@ -14,6 +14,7 @@ gem 'omniauth-facebook'
 gem 'pry'
 #gem "rmagick"
 #gem 'carrierwave'
+gem "paperclip", "~> 4.2"
 
 # gem "rmagick"
 
