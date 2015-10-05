@@ -12,11 +12,14 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'pry'
+<<<<<<< HEAD
 #gem "rmagick"
 #gem 'carrierwave'
 gem "paperclip", "~> 4.2"
+=======
+>>>>>>> d0ce2022c11e4a12df871f2b0e203a7c7bd625f8
 
-# gem "rmagick"
+gem "paperclip", "~> 4.2"
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -28,7 +31,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -67,3 +70,4 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
