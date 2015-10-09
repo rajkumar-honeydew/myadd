@@ -12,12 +12,6 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'pry'
-<<<<<<< HEAD
-#gem "rmagick"
-#gem 'carrierwave'
-gem "paperclip", "~> 4.2"
-=======
->>>>>>> d0ce2022c11e4a12df871f2b0e203a7c7bd625f8
 
 gem "paperclip", "~> 4.2"
 
